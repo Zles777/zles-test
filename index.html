@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zleś Test — Testowanie aplikacji</title>
+  <meta name="description" content="Strona Zleś Test do testowania aplikacji i komponentów." />
+  <meta name="keywords" content="Zleś Test, testowanie aplikacji, testowanie komponentów" />
+  <meta name="author" content="Twoje Imię" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      if (document.documentElement.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+      } else {
+        localStorage.setItem('theme', 'light');
+      }
+    }
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+
+    function showTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => {
+        tab.style.display = (tab.id === tabId) ? 'block' : 'none';
+      });
+
+      const buttons = document.querySelectorAll('.tab-button');
+      buttons.forEach(btn => {
+        if (btn.dataset.tab === tabId) {
+          btn.classList.add('bg-blue-500', 'text-white');
+          btn.classList.remove('hover:bg-gray-200', 'dark:hover:bg-gray-700');
+        } else {
+          btn.classList.remove('bg-blue-500', 'text-white');
+          btn.classList.add('hover:bg-gray-200', 'dark:hover:bg-gray-700');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showTab('mainMenu');
+    });
+
+    function runTest() {
+      alert("Testowy przycisk działa! 🚀");
+    }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen flex transition-colors duration-300">
+
+  <aside class="w-64 bg-white dark:bg-gray-800 shadow-md flex flex-col">
+    <div class="px-6 py-8 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+      <h1 class="text-3xl font-extrabold">Zleś Test</h1>
+      <button onclick="toggleDarkMode()" class="ml-2 px-3 py-1 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+        🌙 / ☀️
+      </button>
+    </div>
+    <nav class="flex-grow px-2 py-4 space-y-2">
+      <button class="tab-button block w-full text-left px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+        data-tab="mainMenu" onclick="showTab('mainMenu')">Menu główne</button>
+      <button class="tab-button block w-full text-left px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+        data-tab="testPanel" onclick="showTab('testPanel')">Panel testowy</button>
+      <button class="tab-button block w-full text-left px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+        data-tab="appPreview" onclick="showTab('appPreview')">Podgląd aplikacji</button>
+    </nav>
+    <footer class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400 text-center">
+      &copy; 2025 Zleś Test. Wszystkie prawa zastrzeżone.
+    </footer>
+  </aside>
+
+  <main class="flex-grow p-8 max-w-5xl mx-auto">
+    <section id="mainMenu" class="tab-content">
+      <div class="flex items-center justify-center h-96">
+        <h2 class="text-6xl font-bold text-center">Zleś Test</h2>
+      </div>
+    </section>
+
+    <section id="testPanel" class="tab-content hidden">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 transition">
+        <h2 class="text-xl font-semibold mb-4">Panel testowy</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Tutaj możesz umieszczać swoje aplikacje, widżety i komponenty do testów.
+        </p>
+
+        <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
+          <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg transform transition hover:scale-105 hover:shadow-xl">
+            <h3 class="font-medium mb-2">Przykładowa karta A</h3>
+            <p class="text-sm mb-3">Miejsce na test komponentu A.</p>
+            <button onclick="runTest()" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded transition">
+              Uruchom test
+            </button>
+          </div>
+          <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg transform transition hover:scale-105 hover:shadow-xl">
+            <h3 class="font-medium mb-2">Przykładowa karta B</h3>
+            <p class="text-sm">Miejsce na test komponentu B.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="appPreview" class="tab-content hidden">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">Podgląd aplikacji</h2>
+        <iframe src="about:blank" class="w-full h-64 border-2 border-gray-300 dark:border-gray-700 rounded-lg"></iframe>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+          Tutaj możesz osadzić aplikację lub stronę do testów (zmień atrybut <code>src</code> w kodzie).
+        </p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
